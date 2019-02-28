@@ -1,0 +1,29 @@
+server:
+  port: 9090
+  
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.cloud: DEBUG
+    org.springframework.web: WARN
+  
+rest:
+  security:
+    api-matcher: /api/**
+    issuer-uri: http://localhost:8080/auth/realms/oose
+    
+security:
+  oauth2:
+    client:
+      access-token-uri: ${rest.security.issuer-uri}/protocol/openid-connect/token
+      user-authorization-uri: ${rest.security.issuer-uri}/protocol/openid-connect/auth
+      client-id: frontend
+      client-secret: 5b18fdea-1e6b-41be-bae9-9d3202ca9ab7
+    resource:
+      user-info-uri: ${rest.security.issuer-uri}/protocol/openid-connect/userinfo
+      prefer-token-info: false
+          
+      
+
+
+

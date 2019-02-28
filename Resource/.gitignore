@@ -1,0 +1,12 @@
+.gradle/
+.idea/
+.classpath
+.project
+.settings/
+/build/
+/bin/
+out/
+*.iml
+*.retry
+java.hprof.txt
+.attach_pid*
