@@ -37,8 +37,11 @@ public class SecurityConfig extends ResourceServerConfigurerAdapter {
 	@Override
 	public void configure(final HttpSecurity http) throws Exception {
 
-		http.csrf().disable().authorizeRequests().antMatchers(securityProperties.getApiMatcher()).authenticated().and()
-				.oauth2Login();
+		http
+			.csrf().disable()
+			.authorizeRequests().antMatchers(securityProperties.getApiMatcher()).authenticated()
+			.and().oauth2Login()
+			.and().requiresChannel().anyRequest().requiresSecure();;
 	}
 
 	@Bean

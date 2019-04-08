@@ -12,7 +12,7 @@ import de.oose.config.SecurityContextUtils;
 
 @RestController
 @RequestMapping("/api")
-public class FrontendRestController {
+public class GatewayRestController {
 	
 	@GetMapping(path = "/username")
 	@PreAuthorize("hasAnyAuthority('ROLE_USER')")
