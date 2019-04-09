@@ -5,28 +5,51 @@ server:
     key-store-password: 123456
     keyStoreType: PKCS12
     keyAlias: tomcat
+    
+spring:
+  main:
+    allow-bean-definition-overriding: true
   
 logging:
   level:
     org.springframework.security: DEBUG
     org.springframework.cloud: DEBUG
     org.springframework.web: WARN
-  
-rest:
-  security:
-    api-matcher: /api/**
-    issuer-uri: http://localhost:8080/auth/realms/oose
     
-security:
-  oauth2:
-    client:
-      access-token-uri: ${rest.security.issuer-uri}/protocol/openid-connect/token
-      user-authorization-uri: ${rest.security.issuer-uri}/protocol/openid-connect/auth
-      client-id: frontend
-      client-secret: 5b18fdea-1e6b-41be-bae9-9d3202ca9ab7
-    resource:
-      user-info-uri: ${rest.security.issuer-uri}/protocol/openid-connect/userinfo
-      prefer-token-info: false
+zuul:  
+  routes:    
+    resource:      
+      path: /api/resource/**
+      url: https://localhost:9091/resource
+    echo:
+      path: /api/echo/**
+      url: https://localhost:9092/echo
+  sensitive-headers: Authorization,Cookie,Set-Cookie
+  
+keycloak:
+  auth-server-url: http://localhost:8080/auth
+  realm: openoose
+  resource: gateway
+  principal-attribute: preferred_username
+  client-key-password:  32a5cc5e-3b21-4853-92a3-5da43304d76d
+  cors: true
+  public-client: false
+      
+#ribbon:
+#  IsSecure: true
+      
+#rest.security.issuer-uri: http://localhost:8080/auth/realms/openoose
+  
+#security:
+#  oauth2:
+#    client:
+#      access-token-uri: ${rest.security.issuer-uri}/protocol/openid-connect/token
+#      user-authorization-uri: ${rest.security.issuer-uri}/protocol/openid-connect/auth
+#      client-id: gateway
+#      client-secret: 32a5cc5e-3b21-4853-92a3-5da43304d76d
+#    resource:
+#      user-info-uri: ${rest.security.issuer-uri}/protocol/openid-connect/userinfo
+#      prefer-token-info: false
           
       
 

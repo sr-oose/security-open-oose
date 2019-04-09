@@ -1,0 +1,19 @@
+server:
+  port: 9091
+  ssl:
+    key-store: keystore.p12
+    key-store-password: 123456
+    keyStoreType: PKCS12
+    keyAlias: tomcat
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+        
+keycloak:
+  realm: openoose
+  realm-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj+mtuX8YAiz4nODPhH0WHRR7AV/9NdyOcpCHbXXcQgWIbmCjQgUpEDNFIgWLanJXBDaLwW1Z2ClEDo95XatH/QUkHCujEy2Q5WY6Ll+PPiwAWt/zE4ifSXYubjQJAmORgvaxwthsIxtHXm10JfaUCUDQAQG31MJ0HrLGUCQc1G4pgkDwhFbag1g0s6YuuBMiDNIzBaLzAs0flUeJUuDOm4K4kjyK8kKUJOenB/SByQ73LxyfMgvLGPZ6KiucBE9H4IrDXcBoK9T8upjGkcru3jzUvEhbNWtmKZ9OwvoupeX+YhtKYPxObCQ4HlMsSBhORXPL5wXYUi2hsGUInWx9lwIDAQAB
+  resource: gateway
+  principal-attribute: preferred_username
+  bearer-only: true
+  cors: true
