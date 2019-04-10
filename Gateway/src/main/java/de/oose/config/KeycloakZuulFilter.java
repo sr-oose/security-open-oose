@@ -1,4 +1,4 @@
-package de.oose.config;
+/*package de.oose.config;
 
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
@@ -53,3 +53,4 @@ class KeycloakZuulFilter extends ZuulFilter {
 	    return "Bearer " + securityContext.getTokenString();
 	}
 }
+*/

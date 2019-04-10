@@ -1,10 +1,10 @@
 server:
   port: 9090
-  ssl:
-    key-store: keystore.p12
-    key-store-password: 123456
-    keyStoreType: PKCS12
-    keyAlias: tomcat
+#  ssl:
+#    key-store: keystore.p12
+#    key-store-password: 123456
+#    keyStoreType: PKCS12
+#    keyAlias: tomcat
     
 spring:
   main:
@@ -16,24 +16,23 @@ logging:
     org.springframework.cloud: DEBUG
     org.springframework.web: WARN
     
-zuul:  
-  routes:    
-    resource:      
-      path: /api/resource/**
-      url: https://localhost:9091/resource
-    echo:
-      path: /api/echo/**
-      url: https://localhost:9092/echo
-  sensitive-headers: Authorization,Cookie,Set-Cookie
+#zuul:  
+#  routes:    
+#    resource:      
+#      path: /api/resource/**
+#      url: http://localhost:9091/resource
+#    echo:
+#      path: /api/echo/**
+#      url: http://localhost:9092/echo
+#  sensitive-headers: Authorization,Cookie,Set-Cookie
+#  sslHostnameValidationEnabled: false
   
 keycloak:
   auth-server-url: http://localhost:8080/auth
   realm: openoose
   resource: gateway
   principal-attribute: preferred_username
-  client-key-password:  32a5cc5e-3b21-4853-92a3-5da43304d76d
-  cors: true
-  public-client: false
+  public-client: true
       
 #ribbon:
 #  IsSecure: true

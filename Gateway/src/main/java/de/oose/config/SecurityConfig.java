@@ -9,19 +9,19 @@ import org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
-import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
+import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
-@Configuration
-@EnableWebSecurity
 @KeycloakConfiguration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
+
 
 	/**
 	 * Registers the KeycloakAuthenticationProvider with the authentication manager.
@@ -39,7 +39,9 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 	@Bean
 	@Override
 	protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
-		return new NullAuthenticatedSessionStrategy();
+		 return new RegisterSessionAuthenticationStrategy(
+		          new SessionRegistryImpl());
+		//return new NullAuthenticatedSessionStrategy();
 	}
 
 
@@ -48,11 +50,12 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 		super.configure(http);
 		http
 			.csrf().disable()
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.sessionAuthenticationStrategy(sessionAuthenticationStrategy())
-			.and().authorizeRequests().antMatchers("/auth/**").permitAll()
-			.and().authorizeRequests().antMatchers("/api/**").authenticated()
-			.and().requiresChannel().anyRequest().requiresSecure();
+			/*.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.sessionAuthenticationStrategy(sessionAuthenticationStrategy())*/
+			.authorizeRequests().antMatchers("/api/**").authenticated()
+								.antMatchers("/echo/**").authenticated()
+								.anyRequest().permitAll();
+			//.and().requiresChannel().anyRequest().requiresSecure();
 	}
 	
     /**
@@ -64,20 +67,23 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public FilterRegistrationBean keycloakAuthenticationProcessingFilterRegistrationBean(
+	public FilterRegistrationBean<KeycloakAuthenticationProcessingFilter> keycloakAuthenticationProcessingFilterRegistrationBean(
 			KeycloakAuthenticationProcessingFilter filter) {
-		FilterRegistrationBean registrationBean = new FilterRegistrationBean(filter);
+		FilterRegistrationBean<KeycloakAuthenticationProcessingFilter> registrationBean = new FilterRegistrationBean<KeycloakAuthenticationProcessingFilter>(
+				filter);
 		registrationBean.setEnabled(false);
 		return registrationBean;
 	}
-	
+
 	@Bean
-	public FilterRegistrationBean keycloakPreAuthActionsFilterRegistrationBean(KeycloakPreAuthActionsFilter filter) {
-		FilterRegistrationBean registrationBean = new FilterRegistrationBean(filter);
+	public FilterRegistrationBean<KeycloakPreAuthActionsFilter> keycloakPreAuthActionsFilterRegistrationBean(
+			KeycloakPreAuthActionsFilter filter) {
+		FilterRegistrationBean<KeycloakPreAuthActionsFilter> registrationBean = new FilterRegistrationBean<KeycloakPreAuthActionsFilter>(
+				filter);
 		registrationBean.setEnabled(false);
 		return registrationBean;
 	}
-	/*
+/*	
 	@Bean
 	public KeycloakZuulFilter keycloakZuulFilter() {
 		return new KeycloakZuulFilter();
