@@ -14,18 +14,15 @@ logging:
   level:
     org.springframework.security: DEBUG
     org.springframework.cloud: DEBUG
-    org.springframework.web: WARN
+    org.springframework.web: DEBUG
     
-#zuul:  
-#  routes:    
-#    resource:      
-#      path: /api/resource/**
-#      url: http://localhost:9091/resource
-#    echo:
-#      path: /api/echo/**
-#      url: http://localhost:9092/echo
-#  sensitive-headers: Authorization,Cookie,Set-Cookie
-#  sslHostnameValidationEnabled: false
+zuul:  
+  routes:    
+    resource:      
+      path: /api/resource/**
+      url: http://localhost:9091/resource
+  sensitive-headers: Authorization,Cookie,Set-Cookie
+  sslHostnameValidationEnabled: false
   
 keycloak:
   auth-server-url: http://localhost:8080/auth

@@ -1,10 +1,14 @@
 server:
   port: 9091
-  ssl:
-    key-store: keystore.p12
-    key-store-password: 123456
-    keyStoreType: PKCS12
-    keyAlias: tomcat
+#  ssl:
+#    key-store: keystore.p12
+#    key-store-password: 123456
+#    keyStoreType: PKCS12
+#    keyAlias: tomcat
+
+logging:
+  level:
+    org.zalando.logbook: trace
 
 spring:
   main:

@@ -1,10 +1,12 @@
 package de.oose.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 @Configuration
 @EnableWebSecurity
@@ -37,12 +39,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{//KeycloakWebSe
 	@Override
 	public void configure(final HttpSecurity http) throws Exception {
 		http
-			.authorizeRequests().anyRequest().permitAll()
+			.csrf().disable()
+			.authorizeRequests().anyRequest().permitAll();//.authenticated();
 	//		.authorizeRequests().anyRequest().authenticated()
-			.and().requiresChannel().anyRequest().requiresSecure()
+			//.and().requiresChannel().anyRequest().requiresSecure()
 			//.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and().csrf().disable();
 	}
+	
+	
 	/*
 	@Bean
 	public KeycloakConfigResolver keyCloakConfigResolver() {

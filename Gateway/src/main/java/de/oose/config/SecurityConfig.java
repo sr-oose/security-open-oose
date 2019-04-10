@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
@@ -41,7 +40,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 	protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
 		 return new RegisterSessionAuthenticationStrategy(
 		          new SessionRegistryImpl());
-		//return new NullAuthenticatedSessionStrategy();
+//		return new NullAuthenticatedSessionStrategy();
 	}
 
 
@@ -50,7 +49,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 		super.configure(http);
 		http
 			.csrf().disable()
-			/*.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+/*			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.sessionAuthenticationStrategy(sessionAuthenticationStrategy())*/
 			.authorizeRequests().antMatchers("/api/**").authenticated()
 								.antMatchers("/echo/**").authenticated()
@@ -83,7 +82,7 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 		registrationBean.setEnabled(false);
 		return registrationBean;
 	}
-/*	
+	/*
 	@Bean
 	public KeycloakZuulFilter keycloakZuulFilter() {
 		return new KeycloakZuulFilter();
