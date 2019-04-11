@@ -17,11 +17,11 @@ logging:
     org.springframework.web: DEBUG
     
 zuul:  
+  sensitiveHeaders: Cookie,Set-Cookie
   routes:    
     resource:      
       path: /api/resource/**
       url: http://localhost:9091/resource
-  sensitive-headers: Authorization,Cookie,Set-Cookie
   sslHostnameValidationEnabled: false
   
 keycloak:

@@ -82,11 +82,11 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 		registrationBean.setEnabled(false);
 		return registrationBean;
 	}
-	/*
+	
 	@Bean
 	public KeycloakZuulFilter keycloakZuulFilter() {
 		return new KeycloakZuulFilter();
 	}
-*/
+
 
 }

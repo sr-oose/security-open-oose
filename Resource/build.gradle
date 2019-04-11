@@ -24,7 +24,7 @@ dependencies {
 	//implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-//	implementation 'org.keycloak:keycloak-spring-boot-starter:4.8.3.Final'
+	implementation 'org.keycloak:keycloak-spring-boot-starter:4.8.3.Final'
 	implementation 'org.glassfish.jaxb:jaxb-runtime'
 	implementation 'org.zalando:logbook-spring-boot-starter:1.5.0'
 	compileOnly    'org.projectlombok:lombok'

@@ -1,4 +1,4 @@
-/*package de.oose.config;
+package de.oose.config;
 
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
@@ -8,16 +8,16 @@ import com.netflix.zuul.context.RequestContext;
 
 class KeycloakZuulFilter extends ZuulFilter {
 
-	private static final String AUTHORIZATION_HEADER = "authorization";
+	private static final String AUTHORIZATION_HEADER = "Authorization";
 
 	@Override
 	public String filterType() {
-	    return "route";
+	    return "pre";
 	}
 
 	@Override
 	public int filterOrder() {
-	    return 0;
+	    return 1;
 	}
 
 	@Override
@@ -28,19 +28,20 @@ class KeycloakZuulFilter extends ZuulFilter {
 	@Override
 	public Object run() {
 	    RequestContext ctx = RequestContext.getCurrentContext();
-	    if (ctx.getRequest().getHeader(AUTHORIZATION_HEADER) == null) {
-	        addKeycloakTokenToHeader(ctx);
+	    String header = ctx.getRequest().getHeader(AUTHORIZATION_HEADER);
+	    System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXX\nHeader: " + header);
+	    if (header == null) {
+		    var securityContext = getRefreshableKeycloakSecurityContext(ctx);
+		    if (securityContext != null) {
+		    	String bearerToken = buildBearerToken(securityContext);
+		    	System.out.println("Adding authorization header");
+		        ctx.addZuulRequestHeader(AUTHORIZATION_HEADER, bearerToken);
+		    }
 	    }
+	    System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 	    return null;
 	}
 
-	private void addKeycloakTokenToHeader(RequestContext ctx) {
-	    RefreshableKeycloakSecurityContext securityContext = getRefreshableKeycloakSecurityContext(ctx);
-	    if (securityContext != null) {
-	        ctx.addZuulRequestHeader(AUTHORIZATION_HEADER, buildBearerToken(securityContext));
-	    }
-	}
-	
 	private RefreshableKeycloakSecurityContext getRefreshableKeycloakSecurityContext(RequestContext ctx) {
 	    if (ctx.getRequest().getUserPrincipal() instanceof KeycloakAuthenticationToken) {
 	        KeycloakAuthenticationToken token = (KeycloakAuthenticationToken) ctx.getRequest().getUserPrincipal();
@@ -53,4 +54,3 @@ class KeycloakZuulFilter extends ZuulFilter {
 	    return "Bearer " + securityContext.getTokenString();
 	}
 }
-*/

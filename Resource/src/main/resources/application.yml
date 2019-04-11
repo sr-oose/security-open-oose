@@ -20,4 +20,3 @@ keycloak:
   resource: gateway
   principal-attribute: preferred_username
   bearer-only: true
-  cors: true
