@@ -1,6 +1,7 @@
 package de.oose.rest;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,8 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class ResourceRestController {
 
 	
-	@GetMapping("/resource")
-	public ResponseEntity<String> ressource() {
-		return ResponseEntity.ok("Ressource successfully received");
+	@GetMapping("/resource/user")
+	public ResponseEntity<String> user() {
+		return ResponseEntity.ok("User access allowed.");
+	}
+	
+	@GetMapping("/resource/admin")
+	@PreAuthorize("hasRole('admin')")
+	public ResponseEntity<String> admin() {
+		return ResponseEntity.ok("Admin access allowed.");
 	}
 }
