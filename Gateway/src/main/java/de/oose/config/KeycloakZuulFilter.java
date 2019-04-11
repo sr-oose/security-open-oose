@@ -29,16 +29,13 @@ class KeycloakZuulFilter extends ZuulFilter {
 	public Object run() {
 	    RequestContext ctx = RequestContext.getCurrentContext();
 	    String header = ctx.getRequest().getHeader(AUTHORIZATION_HEADER);
-	    System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXX\nHeader: " + header);
 	    if (header == null) {
 		    var securityContext = getRefreshableKeycloakSecurityContext(ctx);
 		    if (securityContext != null) {
-		    	String bearerToken = buildBearerToken(securityContext);
-		    	System.out.println("Adding authorization header");
+		    	String bearerToken = "Bearer " + securityContext.getTokenString();
 		        ctx.addZuulRequestHeader(AUTHORIZATION_HEADER, bearerToken);
 		    }
 	    }
-	    System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 	    return null;
 	}
 
@@ -48,9 +45,5 @@ class KeycloakZuulFilter extends ZuulFilter {
 	        return (RefreshableKeycloakSecurityContext) token.getCredentials();
 	    }
 	    return null;
-	}
-
-	private String buildBearerToken(RefreshableKeycloakSecurityContext securityContext) {
-	    return "Bearer " + securityContext.getTokenString();
 	}
 }

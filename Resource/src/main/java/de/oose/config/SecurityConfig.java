@@ -1,49 +1,46 @@
 package de.oose.config;
 
-import java.util.List;
-import java.util.Map;
-
+import org.keycloak.adapters.KeycloakConfigResolver;
+import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
+import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
+import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.zalando.logbook.HeaderFilter;
-import org.zalando.logbook.Logbook;
+import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
+import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
+import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
-@Configuration
-@EnableWebSecurity
+@KeycloakConfiguration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter{//KeycloakWebSecurityConfigurerAdapter {
+public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
 	/**
 	 * Registers the KeycloakAuthenticationProvider with the authentication manager.
-	 *//*
+	 */
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		var keyCloakAuthProvider = keycloakAuthenticationProvider();
 		keyCloakAuthProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
 		auth.authenticationProvider(keyCloakAuthProvider);
 	}
-*/
+
 	
 	/**
 	 * Defines the session authentication strategy.
 	 */
-	/*
 	@Bean
 	@Override
 	protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
 		return new NullAuthenticatedSessionStrategy();
 	}
-	*/
 	
 
 	@Override
 	public void configure(final HttpSecurity http) throws Exception {
+		super.configure(http);
 		http
 			.csrf().disable()
 			.authorizeRequests().anyRequest().authenticated();
@@ -53,12 +50,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{//KeycloakWebSe
 	}
 	
 	
-	/*
 	@Bean
 	public KeycloakConfigResolver keyCloakConfigResolver() {
 		return new KeycloakSpringBootConfigResolver();
 	}
-	*/
 
 
 }
