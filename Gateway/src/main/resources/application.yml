@@ -1,10 +1,10 @@
 server:
   port: 9090
-#  ssl:
-#    key-store: keystore.p12
-#    key-store-password: 123456
-#    keyStoreType: PKCS12
-#    keyAlias: tomcat
+  ssl:
+    key-store: keystore.p12
+    key-store-password: 123456
+    keyStoreType: PKCS12
+    keyAlias: tomcat
     
 spring:
   main:
@@ -22,17 +22,18 @@ zuul:
     resource:      
       path: /api/resource/**
       url: http://localhost:9091/resource
-  sslHostnameValidationEnabled: false
-  
+ 
 keycloak:
-  auth-server-url: http://localhost:8080/auth
+  auth-server-url: https://localhost:8443/auth
   realm: openoose
   resource: gateway
   principal-attribute: preferred_username
   public-client: true
-      
-#ribbon:
-#  IsSecure: true
+
+# development only
+  allow-any-hostname: true
+  disable-trust-manager: true
+
       
 #rest.security.issuer-uri: http://localhost:8080/auth/realms/openoose
   
