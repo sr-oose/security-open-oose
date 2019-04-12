@@ -17,7 +17,7 @@ logging:
     org.springframework.web: DEBUG
     
 zuul:  
-  sensitiveHeaders: Cookie,Set-Cookie
+  sensitive-headers: Cookie,Set-Cookie
   routes:    
     resource:      
       path: /api/resource/**
@@ -29,6 +29,7 @@ keycloak:
   resource: gateway
   principal-attribute: preferred_username
   public-client: true
+  
 
 # development only
   allow-any-hostname: true

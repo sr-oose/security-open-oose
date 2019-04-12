@@ -8,10 +8,10 @@ import org.zalando.logbook.Logbook;
 //@EnableResourceServer
 
 @SpringBootApplication
-public class ResourceApplication {
+public class DataServerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ResourceApplication.class, args);
+		SpringApplication.run(DataServerApplication.class, args);
 	}
 		
 	/** 
@@ -21,4 +21,5 @@ public class ResourceApplication {
 	public Logbook makeLogBook() {
 		return Logbook.builder().headerFilter(h -> h).build();
 	}
+	
 }
