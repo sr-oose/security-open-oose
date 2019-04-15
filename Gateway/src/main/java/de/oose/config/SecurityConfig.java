@@ -18,22 +18,11 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
-	/*@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		var keyCloakAuthProvider = keycloakAuthenticationProvider();
-		keyCloakAuthProvider.setGrantedAuthoritiesMapper(new SimpleAuthorityMapper());
-		auth.authenticationProvider(keyCloakAuthProvider);
-	}*/
-
-	/**
-	 * Defines the session authentication strategy.
-	 */
 	@Bean
 	@Override
 	protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
 		 return new RegisterSessionAuthenticationStrategy(
 		          new SessionRegistryImpl());
-//		return new NullAuthenticatedSessionStrategy();
 	}
 
 
@@ -41,13 +30,10 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 	public void configure(final HttpSecurity http) throws Exception {
 		super.configure(http);
 		http
-			.csrf().disable()
-/*			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.sessionAuthenticationStrategy(sessionAuthenticationStrategy())*/
 			.authorizeRequests().antMatchers("/api/**").authenticated()
 								.antMatchers("/echo/**").authenticated()
-								.anyRequest().permitAll();
-			//.and().requiresChannel().anyRequest().requiresSecure();
+								.anyRequest().permitAll()
+			.and().requiresChannel().anyRequest().requiresSecure();
 	}
 	
     /**

@@ -8,6 +8,9 @@ logging:
 spring:
   main:
     allow-bean-definition-overriding: true
+    
+rest:
+  data-server-uri: http://localhost:9092/data
         
 keycloak:
   realm: openoose
