@@ -19,4 +19,5 @@ public class ResourceApplication {
 	public Logbook makeLogBook() {
 		return Logbook.builder().headerFilter(h -> h).build();
 	}
+
 }

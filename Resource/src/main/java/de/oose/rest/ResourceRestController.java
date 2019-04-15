@@ -1,7 +1,6 @@
 package de.oose.rest;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,18 +16,18 @@ import org.springframework.web.client.RestTemplate;
 public class ResourceRestController {
 
 	private static final String AUTHORIZATION_HEADER = "Authorization";
-	private RestTemplate restTemplate = new RestTemplate();
+	private RestTemplate restTemplate;
 	
 	private final String dataServerUri;
 	
-	public ResourceRestController(@Value("${rest.data-server-uri}") String dataServerUri) {
+	public ResourceRestController(@Value("${rest.data-server-uri}") String dataServerUri, RestTemplate restTemplate) {
 		this.dataServerUri = dataServerUri;
+		this.restTemplate = restTemplate;
 	}
 
 	@GetMapping("/resource/user")
 	public ResponseEntity<String> user(@RequestHeader(AUTHORIZATION_HEADER) String authTokenString) {
-		var response = restTemplate.exchange(dataServerUri, HttpMethod.GET,
-				makeHttpEntityWithAuthHeader(authTokenString), Integer.class);
+		var response = restTemplate.exchange(dataServerUri, HttpMethod.GET, null, Integer.class);
 		if (response.getStatusCodeValue() >= 200 && response.getStatusCodeValue() < 300) {
 			return ResponseEntity.ok("Received number: " + response.getBody());
 		}
@@ -40,11 +39,12 @@ public class ResourceRestController {
 	public ResponseEntity<String> admin() {
 		return ResponseEntity.ok("Admin access allowed.");
 	}
-
+/*
 	private HttpEntity<Integer> makeHttpEntityWithAuthHeader(String tokenString) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(AUTHORIZATION_HEADER, tokenString);
 		HttpEntity<Integer> entity = new HttpEntity<>(headers);
 		return entity;
 	}
+	*/
 }

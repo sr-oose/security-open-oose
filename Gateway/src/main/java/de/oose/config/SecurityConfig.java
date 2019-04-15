@@ -76,6 +76,4 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 	public KeycloakZuulFilter keycloakZuulFilter() {
 		return new KeycloakZuulFilter();
 	}
-
-
 }

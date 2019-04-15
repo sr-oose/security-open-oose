@@ -3,7 +3,10 @@ package de.oose.config;
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
+import org.keycloak.adapters.springsecurity.client.KeycloakClientRequestFactory;
+import org.keycloak.adapters.springsecurity.client.KeycloakRestTemplate;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -11,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.web.client.RestTemplate;
 
 @KeycloakConfiguration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -34,7 +38,6 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 	@Override
 	protected SessionAuthenticationStrategy sessionAuthenticationStrategy() {
 		return new NullAuthenticatedSessionStrategy();
-		//return new RegisterSessionAuthenticationStrategy(new SessionRegistryImpl());
 	}
 	
 
@@ -44,9 +47,6 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 		http
 			.csrf().disable()
 			.authorizeRequests().anyRequest().authenticated();
-	//		.authorizeRequests().anyRequest().authenticated()
-			//.and().requiresChannel().anyRequest().requiresSecure()
-			//.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 	}
 	
 	
@@ -55,5 +55,8 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 		return new KeycloakSpringBootConfigResolver();
 	}
 
-
+	@Bean
+    public RestTemplate makeRestTemplate(KeycloakClientRequestFactory factory) {
+		return new KeycloakRestTemplate(factory);
+    }
 }

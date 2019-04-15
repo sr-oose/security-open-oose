@@ -22,6 +22,7 @@ zuul:
     resource:      
       path: /api/resource/**
       url: http://localhost:9091/resource
+      
  
 keycloak:
   auth-server-url: https://localhost:8443/auth
