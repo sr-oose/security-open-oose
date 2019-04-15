@@ -5,8 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.zalando.logbook.Logbook;
 
-//@EnableResourceServer
-
 @SpringBootApplication
 public class ResourceApplication {
 
