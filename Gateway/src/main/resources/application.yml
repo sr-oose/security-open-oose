@@ -29,7 +29,9 @@ keycloak:
   realm: openoose
   resource: gateway
   principal-attribute: preferred_username
-  public-client: true
+  credentials:
+    secret: 31d77b02-97e9-4e7c-9b83-e4c141780ba7
+  
   
 
 # development only
@@ -37,19 +39,6 @@ keycloak:
   disable-trust-manager: true
 
       
-#rest.security.issuer-uri: http://localhost:8080/auth/realms/openoose
-  
-#security:
-#  oauth2:
-#    client:
-#      access-token-uri: ${rest.security.issuer-uri}/protocol/openid-connect/token
-#      user-authorization-uri: ${rest.security.issuer-uri}/protocol/openid-connect/auth
-#      client-id: gateway
-#      client-secret: 32a5cc5e-3b21-4853-92a3-5da43304d76d
-#    resource:
-#      user-info-uri: ${rest.security.issuer-uri}/protocol/openid-connect/userinfo
-#      prefer-token-info: false
-          
       
 
 

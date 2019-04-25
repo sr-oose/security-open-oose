@@ -12,7 +12,7 @@ spring:
 keycloak:
   realm: openoose
   auth-server-url: https://localhost:8443/auth
-  resource: gateway
+  resource: dataserver
   principal-attribute: preferred_username
   bearer-only: true
 
