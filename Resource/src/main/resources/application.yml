@@ -8,18 +8,18 @@ logging:
 spring:
   main:
     allow-bean-definition-overriding: true
-    
-rest:
-  data-server-uri: http://localhost:9092/data
-        
+
 keycloak:
-  realm: openoose
+  realm: oose
   auth-server-url: https://localhost:8443/auth
   resource: resource
   principal-attribute: preferred_username
   bearer-only: true
-
   # development only
   allow-any-hostname: true
   disable-trust-manager: true
+  
+rest:
+  data-server-uri: http://localhost:9092/data
+        
   

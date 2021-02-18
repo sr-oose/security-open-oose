@@ -1,4 +1,4 @@
-package de.oose.rest;
+package de.oose;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -39,12 +39,4 @@ public class ResourceRestController {
 	public ResponseEntity<String> admin() {
 		return ResponseEntity.ok("Admin access allowed.");
 	}
-/*
-	private HttpEntity<Integer> makeHttpEntityWithAuthHeader(String tokenString) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.set(AUTHORIZATION_HEADER, tokenString);
-		HttpEntity<Integer> entity = new HttpEntity<>(headers);
-		return entity;
-	}
-	*/
 }

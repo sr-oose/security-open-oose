@@ -3,43 +3,47 @@ server:
   ssl:
     key-store: keystore.p12
     key-store-password: 123456
-    keyStoreType: PKCS12
+    key-store-type: PKCS12
     keyAlias: tomcat
     
 spring:
-  main:
-    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            token-uri: https://localhost:8443/auth/realms/oose/protocol/openid-connect/token
+            authorization-uri: https://localhost:8443/auth/realms/oose/protocol/openid-connect/auth
+            user-info-uri: https://localhost:8443/auth/realms/oose/protocol/openid-connect/userinfo
+            user-name-attribute: preferred_username
+        registration:
+          gateway:
+            provider: keycloak
+            client-id: gateway
+            client-secret: 31d77b02-97e9-4e7c-9b83-e4c141780ba7
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay
+      routes:
+      - id: resource
+        uri: http://localhost:9091
+        predicates:
+          - Path=/api/resource/**
+        filters:
+          - RemoveRequestHeader=Cookie
+          - RewritePath=/api/(?<remaining>.*), /$\{remaining}
+
+#keycloak:
+#  auth-server-url: https://localhost:8443/auth
+#  realm: oose
+#  resource: gateway
+#  principal-attribute: preferred_username
+#  credentials:
+#    secret: 31d77b02-97e9-4e7c-9b83-e4c141780ba7
   
-logging:
-  level:
-    org.springframework.security: DEBUG
-    org.springframework.cloud: DEBUG
-    org.springframework.web: DEBUG
-    
-zuul:  
-  sensitive-headers: Cookie,Set-Cookie
-  routes:    
-    resource:      
-      path: /api/resource/**
-      url: http://localhost:9091/resource
-      
- 
-keycloak:
-  auth-server-url: https://localhost:8443/auth
-  realm: openoose
-  resource: gateway
-  principal-attribute: preferred_username
-  credentials:
-    secret: 31d77b02-97e9-4e7c-9b83-e4c141780ba7
-  
-  
-
-# development only
-  allow-any-hostname: true
-  disable-trust-manager: true
-
-      
-      
-
-
+ # development only
 

@@ -10,7 +10,7 @@ spring:
     allow-bean-definition-overriding: true
         
 keycloak:
-  realm: openoose
+  realm: oose
   auth-server-url: https://localhost:8443/auth
   resource: dataserver
   principal-attribute: preferred_username

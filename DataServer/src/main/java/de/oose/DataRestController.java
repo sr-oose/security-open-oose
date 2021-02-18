@@ -1,4 +1,4 @@
-package de.oose.rest;
+package de.oose;
 
 import java.util.Random;
 
