@@ -37,13 +37,3 @@ spring:
           - RemoveRequestHeader=Cookie
           - RewritePath=/api/(?<remaining>.*), /$\{remaining}
 
-#keycloak:
-#  auth-server-url: https://localhost:8443/auth
-#  realm: oose
-#  resource: gateway
-#  principal-attribute: preferred_username
-#  credentials:
-#    secret: 31d77b02-97e9-4e7c-9b83-e4c141780ba7
-  
- # development only
-

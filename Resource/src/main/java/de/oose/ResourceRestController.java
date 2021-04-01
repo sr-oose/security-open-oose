@@ -26,6 +26,7 @@ public class ResourceRestController {
 	}
 
 	@GetMapping("/resource/user")
+	@PreAuthorize("hasRole('ROLE_user')")
 	public ResponseEntity<String> user(@RequestHeader(AUTHORIZATION_HEADER) String authTokenString) {
 		var response = restTemplate.exchange(dataServerUri, HttpMethod.GET, null, Integer.class);
 		if (response.getStatusCodeValue() >= 200 && response.getStatusCodeValue() < 300) {
